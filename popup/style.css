@@ -1,0 +1,217 @@
+body {
+    width: 400px;
+    height: 500px;
+    background-color: #141314;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.frame {
+    background-color: #1c1b1d;
+    border-radius: 24px;
+    width: calc(100% - 16px);
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+#title {
+    margin-block: 8px;
+    font-size: 6vw;
+    font-weight: 900;
+    color: #e6e1e3;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e6e1e3;
+    text-align: center;
+}
+
+.checkbox {
+    cursor: pointer;
+    background-color: #363339;
+    height: 30px;
+    width: 55px;
+    display: block;
+    border-radius: 30px;
+    border: 2px solid #948e99;
+    box-sizing: border-box;
+    transition: cubic-bezier(0, 0, 0, 1) 0.2s background-color, cubic-bezier(0, 0, 0, 1) 0.2s border-color;
+    &::after,
+    & > span {
+        content: "";
+        background-color: #948e99;
+        width: 22px;
+        height: 22px;
+        display: block;
+        margin-top: 2px;
+        margin-left: 2px;
+        border-radius: 13px;
+        transition: cubic-bezier(0, 0, 0, 1) 0.2s margin-left, cubic-bezier(0, 0, 0, 1) 0.2s transform, cubic-bezier(0, 0, 0, 1) 0.2s background-color;
+    }
+    & > span {
+        position: absolute;
+        opacity: 0.7;
+    }
+    &:active::after {
+        transform: scale(1.1);
+    }
+}
+
+.c1 {
+    transition: 0.02s margin-left !important;
+}
+
+.c2 {
+    transition: 0.04s margin-left !important;
+}
+
+.c2 {
+    transition: 0.06s margin-left !important;
+}
+
+.c3 {
+    transition: 0.08s margin-left !important;
+}
+
+.c4 {
+    transition: 0.1s margin-left !important;
+}
+
+.c5 {
+    transition: 0.12s margin-left !important;
+}
+
+.c6 {
+    transition: 0.224s margin-left !important;
+}
+
+.c7 {
+    transition: 0.16s margin-left !important;
+}
+
+.c8 {
+    transition: 0.18s margin-left !important;
+}
+
+.c9 {
+    transition: 0.2s !important;
+}
+
+label:has([type="checkbox"]:checked) > .checkbox {
+    background-color: #cdb6ff;
+    border-color: #cdb6ff;
+    &::after,
+    & > span {
+        background-color: #1d074b;
+        margin-left: 28px;
+    }
+}
+
+.content {
+    color: #e6e1e3;
+    font-size: 1rem;
+    user-select: none;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block: 4px;
+}
+
+.sidebar,
+.textAndSubmit {
+    display: flex;
+    align-items: center;
+}
+
+[type="button"] {
+    transition: 0.2s ease-out background-color, 0.1s ease-in border-radius;
+    color: black;
+    width: 55px;
+    background-color: #6750a4;
+    border: none;
+    outline: none;
+    color: #e6e0e9;
+    text-align: center;
+    margin-left: 6px;
+    padding: 7.5px;
+    border-radius: 30px;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 30px;
+    &:hover {
+        background-color: #49454f;
+    }
+    &:active {
+        border-radius: 4px;
+    }
+}
+[type="text"] {
+    background-color: #36343b;
+    border-radius: 7.5px;
+    border: 0;
+    width: 130px;
+    height: 30px;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
+    color: #e4dee7;
+    &::placeholder {
+        color: #cac4d0;
+    }
+}
+[type="number"] {
+    width: 40px;
+    background-color: #36343a;
+    border: none;
+    outline: none;
+    color: #e6e0e9;
+    text-align: center;
+    margin-left: 6px;
+    padding: 7.5px;
+    border-radius: 30px;
+    &::-webkit-inner-spin-button {
+        display: none;
+    }
+}
+.delete {
+    background-color: #572424;
+    &:hover {
+        background-color: #501414;
+    }
+}
+
+[type="range"] {
+    cursor: pointer;
+    appearance: none;
+    height: 20px;
+    background-color: #454559;
+    border-radius: 7.5px;
+    margin: 0;
+    &::-webkit-slider-thumb {
+        appearance: none;
+        width: 4px;
+        height: 30px;
+        background-color: #ccb6ff;
+        border-radius: 5px;
+        outline: 5px solid #1c1b1d;
+    }
+}
+
+.rightText {
+    font-size: 0.9rem;
+    color: white;
+}

@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "NICE",
+    "description": "더 편리한 엔트리 워크스페이스 환경을 제공합니다",
+    "version": "1.0",
+    "permissions": ["storage", "scripting", "tabs"],
+    "host_permissions": ["https://*.playentry.org/*"],
+    "action": {
+        "default_popup": "popup/index.html"
+    },
+    "content_scripts": [
+        {
+            "js": ["script/script.js"],
+            "matches": ["https://playentry.org/ws/*"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["function/*"],
+            "matches": ["https://playentry.org/*"]
+        }
+    ]
+}
