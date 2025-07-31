@@ -95,10 +95,11 @@ document.querySelectorAll("input").forEach((ele) => {
 });
 
 // 값 가져와서 화면에 뿌리는 코드
-chrome.storage.local.get(["op1s1", "op2s1", "op1s2", "op2s2"], (r) => {
+chrome.storage.local.get(["op1s1", "op2s1", "op1s2", "op2s2", "op1s3"], (r) => {
     document.querySelector("#op1s1").checked = r.op1s1 || false;
     document.querySelector("#op2s1").value = r.op2s1 || 1;
     document.querySelector("#op2s1").dispatchEvent(new Event("input"));
     document.querySelector("#op1s2").checked = r.op1s2 || false;
     JSON.parse(r.op2s2).forEach((i, l) => addFont(i, l, r.op2s2));
+    document.querySelector("#op1s3").checked = r.op1s3 || false;
 });

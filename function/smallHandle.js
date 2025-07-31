@@ -7,5 +7,6 @@
     Entry.stage.handle.knobs.forEach((i) => (i.scaleX = i.scaleY = 1.52 * size));
     ((i) => (i.scaleX = i.scaleY = 0.4 * size))(Entry.stage.handle.rotateKnob);
     ((i) => (i.scaleX = i.scaleY = 1.52 * size))(Entry.stage.handle.centerPoint);
+    ((i) => (i.scaleX = i.scaleY = 1 * size))(Entry.stage.handle.directionArrow);
     Entry.stage.updateHandle();
 })();

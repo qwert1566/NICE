@@ -15,7 +15,7 @@ function waitLoading() {
 }
 
 function applyCode() {
-    chrome.storage.local.get(["op1s1", "op2s1", "op1s2", "op2s2"], async (r) => {
+    chrome.storage.local.get(["op1s1", "op2s1", "op1s2", "op2s2", "op1s3"], async (r) => {
         const data = document.createElement("div");
         data.style.display = "none";
         data.id = "extData";
@@ -23,6 +23,7 @@ function applyCode() {
         document.body.appendChild(data);
         getScript("smallHandle");
         getScript("localFont");
+        getScript("hiddenStop");
     });
 }
 
