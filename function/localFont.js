@@ -5,7 +5,7 @@ if (!EntryStatic.isProxy) {
     if (JSON.parse(document.querySelector("#extData").innerText).op1s2) {
         localFont = EntryStatic.fonts.filter((i) => !i?.isLocal);
         Entry.toast.success("NICE 확장 프로그램", "로컬 폰트 추가 플러그인 로딩 됨", false);
-        JSON.parse(JSON.parse(document.querySelector("#extData").innerText).op2s2).forEach((i) => {
+        JSON.parse(JSON.parse(document.querySelector("#extData").innerText).op2s2 || "[]").forEach((i) => {
             localFont.unshift({
                 name: "[Local] " + i,
                 family: i,
