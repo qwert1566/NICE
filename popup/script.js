@@ -26,6 +26,7 @@ function addFont(i, l, k) {
     const q = document.createElement("label");
     const w = document.createElement("span");
     w.classList.add("content");
+    w.classList.add("nonhelp");
     w.innerText = "폰트 제거";
     const r = document.createElement("span");
     r.classList.add("rightText");
@@ -57,13 +58,16 @@ document.querySelectorAll(".checkbox").forEach((e) => {
 });
 
 document.querySelectorAll('[type="range"]').forEach((e) => {
-    e.addEventListener("input", () => (e.parentNode.querySelector('[type="number"]').value = parseFloat(e.value).toFixed(2)));
+    e.addEventListener(
+        "input",
+        () =>
+            (e.parentNode.querySelector('[type="number"]').value =
+                e.parentNode.querySelector('[type="number"]').dataset.type != "int" ? parseFloat(e.value).toFixed(2) : e.value)
+    );
 });
 
 document.querySelectorAll('[type="number"]').forEach((e) => {
     e.addEventListener("change", () => {
-        if (e.value < e.min) e.value = e.min;
-        if (e.value > e.max) e.value = e.max;
         e.value = parseFloat(e.value).toFixed(2);
         e.parentNode.querySelector('[type="range"]').value = e.value;
         e.parentNode.querySelector('[type="range"]').dispatchEvent(new Event("input"));
@@ -95,10 +99,12 @@ document.querySelectorAll("input").forEach((ele) => {
 });
 
 // 값 가져와서 화면에 뿌리는 코드
-chrome.storage.local.get(["op1s1", "op2s1", "op1s2", "op2s2", "op1s3"], (r) => {
+chrome.storage.local.get(["op1s1", "op2s1", "op3s1", "op1s2", "op2s2", "op1s3"], (r) => {
     document.querySelector("#op1s1").checked = r.op1s1 || false;
     document.querySelector("#op2s1").value = r.op2s1 || 1;
     document.querySelector("#op2s1").dispatchEvent(new Event("input"));
+    document.querySelector("#op3s1").value = r.op3s1 || 1;
+    document.querySelector("#op3s1").dispatchEvent(new Event("input"));
     document.querySelector("#op1s2").checked = r.op1s2 || false;
     JSON.parse(r.op2s2 || "[]").forEach((i, l) => addFont(i, l, r.op2s2));
     document.querySelector("#op1s3").checked = r.op1s3 || false;

@@ -122,6 +122,11 @@ label:has([type="checkbox"]:checked) > .checkbox {
     color: #e6e1e3;
     font-size: 1rem;
     user-select: none;
+    cursor: help;
+}
+
+.nonhelp {
+    cursor: unset !important;
 }
 
 label {
