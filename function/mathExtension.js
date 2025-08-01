@@ -16,7 +16,6 @@ if (!Entry.block.calc_operation.isEdited) {
             "쌍곡선 사인": "sinh",
             "쌍곡선 탄젠트": "tanh",
             세제곱근: "cbrt",
-            제곱근: "sqrt",
             "exp 값": "exp",
             "exp-1 값": "expm1",
             "32비트 정수 앞쪽 0의 개수": "clz32",
