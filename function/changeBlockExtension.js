@@ -9,8 +9,9 @@ if (!Entry.block.change_string_case.params.isEdited) {
     Entry.block.change_string_case.params.find((i) => i.options).options = [...defaultCalcOperationDropdownMenu2];
     const calcOperationDropdownMenu = Entry.block.change_string_case.params.find((i) => i.options).options;
     if (JSON.parse(document.querySelector("#extData").innerText).op1s5) {
-        Entry.toast.success("NICE 확장 프로그램", "수학 함수 확장 플러그인 로딩 됨", false);
+        Entry.toast.success("NICE 확장 프로그램", "아스키코드 조회 코드 추가 플러그인 로딩 됨", false);
         calcOperationDropdownMenu.push(["첫 글자의 아스키 코드", "codePointAt"]);
         console.log(calcOperationDropdownMenu);
     }
 })();
+
