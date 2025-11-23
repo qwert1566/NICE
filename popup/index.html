@@ -3,127 +3,65 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>설정</title>
+        <title>작품 시스템</title>
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
-        <span id="title">작업 환경 설정</span>
         <div class="frame">
-            <span class="subtitle">오브젝트 크기 조절 핸들 변경</span>
-            <br />
-            <label
-                ><span class="content" title="기본 값은 비활성화입니다">켜기</span>
-                <span class="checkbox">
-                    <span class="c1"></span>
-                    <span class="c2"></span>
-                    <span class="c3"></span>
-                    <span class="c4"></span>
-                    <span class="c5"></span>
-                    <span class="c6"></span>
-                    <span class="c7"></span>
-                    <span class="c8"></span>
-                    <span class="c9"></span>
-                </span>
-                <input type="checkbox" id="op1s1" data-fileName="smallHandle" hidden checked="false" />
-            </label>
-            <label
-                ><span class="content" title="기본 값은 1입니다">크기 조절</span>
-                <div class="sidebar">
-                    <input type="range" max="3" min="0" step="0.01" id="op2s1" value="1" data-fileName="smallHandle" />
-                    <input type="number" max="3" min="0" />
+            <h1>오브젝트 조절 핸들 설정</h1>
+            <div class="menuBox">
+                <p title='기본 값은 "꺼짐"입니다'>켜기</p>
+                <input type="checkbox" id="op1s1" />
+            </div>
+            <div class="menuBox">
+                <p title='기본 값은 "1"입니다'>크기</p>
+                <div class="muiltInput">
+                    <input max="3" min="0" value="1" step="0.01" type="range" id="op1s2" />
+                    <input max="3" min="0" value="1" type="number" id="op1s2n" />
                 </div>
-            </label>
-            <label
-                ><span class="content" title="기본 값은 100입니다">불투명도 조절</span>
-                <div class="sidebar">
-                    <input type="range" max="100" min="0" step="1" id="op3s1" value="100" data-fileName="smallHandle" />
-                    <input type="number" max="100" min="0" data-type="int" />
+            </div>
+            <div class="menuBox">
+                <p title='기본 값은 "1"입니다'>불투명도</p>
+                <div class="muiltInput">
+                    <input max="100" min="0" value="100" step="1" type="range" id="op1s3" />
+                    <input max="100" min="0" value="100" type="number" id="op1s3n" />
                 </div>
-            </label>
+            </div>
         </div>
-        <div class="frame" id="font">
-            <span class="subtitle">로컬 폰트 추가</span>
-            <br />
-            <label
-                ><span class="content" title="기본 값은 비활성화입니다">켜기</span>
-                <span class="checkbox">
-                    <span class="c1"></span>
-                    <span class="c2"></span>
-                    <span class="c3"></span>
-                    <span class="c4"></span>
-                    <span class="c5"></span>
-                    <span class="c6"></span>
-                    <span class="c7"></span>
-                    <span class="c8"></span>
-                    <span class="c9"></span>
-                </span>
-                <input type="checkbox" id="op1s2" data-fileName="localFont" hidden checked="false" />
-            </label>
-            <label
-                ><span class="content nonhelp">폰트 추가</span>
-                <div class="textAndSubmit">
-                    <input type="text" placeholder="폰트 입력..." />
-                    <input type="button" value="추가" id="op2s2" />
+        <div class="frame op2">
+            <h1>로컬 폰트 추가</h1>
+            <div class="menuBox">
+                <p title='기본 값은 "꺼짐"입니다'>켜기</p>
+                <input type="checkbox" id="op2s1" />
+            </div>
+            <div class="menuBox">
+                <p class="dontHelp">폰트 추가</p>
+                <div class="muiltInput">
+                    <input type="text" id="op2s0" />
+                    <input type="button" value="추가" id="op2s0n" />
                 </div>
-            </label>
+            </div>
+            <template id="op2tem">
+                <div class="menuBox">
+                    <p class="dontHelp fontName">폰트 추가</p>
+                    <input type="button" value="제거" class="deleteBtn" />
+                </div>
+            </template>
         </div>
         <div class="frame">
-            <span class="subtitle">작품 실행 중 코드 수정</span>
-            <br />
-            <label
-                ><span class="content" title="기본 값은 비활성화입니다">켜기</span>
-                <span class="checkbox">
-                    <span class="c1"></span>
-                    <span class="c2"></span>
-                    <span class="c3"></span>
-                    <span class="c4"></span>
-                    <span class="c5"></span>
-                    <span class="c6"></span>
-                    <span class="c7"></span>
-                    <span class="c8"></span>
-                    <span class="c9"></span>
-                </span>
-                <input type="checkbox" id="op1s3" data-fileName="hiddenStop" hidden checked="false" />
-            </label>
+            <h1>작품 실행 중 코드 수정</h1>
+            <div class="menuBox">
+                <p title='기본 값은 "꺼짐"입니다'>켜기</p>
+                <input type="checkbox" id="op3s1" />
+            </div>
         </div>
         <div class="frame">
-            <span class="subtitle">수학 함수 확장</span>
-            <br />
-            <label
-                ><span class="content" title="기본 값은 비활성화입니다">켜기</span>
-                <span class="checkbox">
-                    <span class="c1"></span>
-                    <span class="c2"></span>
-                    <span class="c3"></span>
-                    <span class="c4"></span>
-                    <span class="c5"></span>
-                    <span class="c6"></span>
-                    <span class="c7"></span>
-                    <span class="c8"></span>
-                    <span class="c9"></span>
-                </span>
-                <input type="checkbox" id="op1s4" data-fileName="mathExtension" hidden checked="false" />
-            </label>
+            <h1>소리치기 코드 추가</h1>
+            <div class="menuBox">
+                <p title='기본 값은 "꺼짐"입니다'>켜기</p>
+                <input type="checkbox" id="op4s1" />
+            </div>
         </div>
-        <div class="frame">
-            <span class="subtitle">아스키코드 조회 코드 추가</span>
-            <br />
-            <label
-                ><span class="content" title="기본 값은 비활성화입니다">켜기</span>
-                <span class="checkbox">
-                    <span class="c1"></span>
-                    <span class="c2"></span>
-                    <span class="c3"></span>
-                    <span class="c4"></span>
-                    <span class="c5"></span>
-                    <span class="c6"></span>
-                    <span class="c7"></span>
-                    <span class="c8"></span>
-                    <span class="c9"></span>
-                </span>
-                <input type="checkbox" id="op1s5" data-fileName="changeBlockExtension" hidden checked="false" />
-            </label>
-        </div>
-        <script src="script.js"></script>
+        <script src="./script.js"></script>
     </body>
 </html>

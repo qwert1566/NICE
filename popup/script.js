@@ -1,113 +1,101 @@
-function restart(k, v, i) {
+function getSetting() {
+    return new Promise((resolve) => {
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (t) => {
+            chrome.scripting.executeScript(
+                {
+                    target: { tabId: t[0].id },
+                    func: () => {
+                        return pluginSetting;
+                    },
+                    world: "MAIN",
+                },
+                (r) => {
+                    console.log(r[0].result);
+                    resolve(r[0].result);
+                }
+            );
+        });
+    });
+}
+
+function setSetting(o) {
+    chrome.storage.local.set(o);
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (t) => {
         chrome.scripting.executeScript({
             target: { tabId: t[0].id },
-            func: (k, v, i, c) => {
-                console.log(k, v, i, c);
-                if (/^https:\/\/playentry\.org\/ws.*$/.test(location.href)) {
-                    const dataJSON = JSON.parse(document.querySelector("#extData").innerText);
-                    dataJSON[k] = v;
-                    document.querySelector("#extData").innerText = JSON.stringify(dataJSON);
-                    document.querySelector(`#${i}`).remove();
-                    const ele = document.createElement("script");
-                    ele.src = `chrome-extension://${c}/function/${i}.js`;
-                    ele.async = false;
-                    ele.id = i;
-                    document.body.appendChild(ele);
-                }
+            func: (o) => {
+                pluginSetting[Object.keys(o)[0]] = Object.values(o)[0];
+                enableCode(Object.keys(o)[0].split("s")[0]);
             },
-            args: [k, v, i, chrome.runtime.id],
+            args: [o],
             world: "MAIN",
         });
     });
 }
 
-function addFont(i, l, k) {
-    const q = document.createElement("label");
-    const w = document.createElement("span");
-    w.classList.add("content");
-    w.classList.add("nonhelp");
-    w.innerText = "폰트 제거";
-    const r = document.createElement("span");
-    r.classList.add("rightText");
-    r.innerText = i;
-    r.style.fontFamily = `"${i}"`;
-    const e = document.createElement("div");
-    const t = document.createElement("input");
-    t.type = "button";
-    t.classList.add("delete");
-    t.value = "제거";
-    t.addEventListener("click", () => {
-        let data = JSON.parse(k || "[]");
-        data.splice(l, 1);
-        q.remove();
-        chrome.storage.local.set({ op2s2: JSON.stringify(data) });
-        restart("op2s2", JSON.stringify(data), "localFont");
-        location.reload();
+document.querySelectorAll('input[type="range"]').forEach((e) => {
+    e.addEventListener("input", () => {
+        document.querySelector("#" + e.id + "n").value = parseFloat(e.value).toFixed(e.step.split(".")[1]?.length || 0);
+        setSetting({ [e.id]: e.value });
     });
-    e.appendChild(r);
-    e.appendChild(t);
-    q.appendChild(w);
-    q.appendChild(e);
-    document.querySelector("#font").appendChild(q);
-}
-
-// 이건 그냥 그런 코드
-document.querySelectorAll(".checkbox").forEach((e) => {
-    e.parentNode.querySelector("input").click();
 });
 
-document.querySelectorAll('[type="range"]').forEach((e) => {
-    e.addEventListener(
-        "input",
-        () =>
-            (e.parentNode.querySelector('[type="number"]').value =
-                e.parentNode.querySelector('[type="number"]').dataset.type != "int" ? parseFloat(e.value).toFixed(2) : e.value)
-    );
-});
-
-document.querySelectorAll('[type="number"]').forEach((e) => {
+document.querySelectorAll('input[type="number"]').forEach((e) => {
     e.addEventListener("change", () => {
-        e.value = parseFloat(e.value).toFixed(2);
-        e.parentNode.querySelector('[type="range"]').value = e.value;
-        e.parentNode.querySelector('[type="range"]').dispatchEvent(new Event("input"));
-        e.parentNode.querySelector('[type="range"]').dispatchEvent(new Event("change"));
+        if (e.value > e.max) e.value = e.max;
+        if (e.value < e.min) e.value = e.min;
+        e.value = parseFloat(e.value).toFixed(document.querySelector("#" + e.id.split("n")[0]).step.split(".")[1]?.length || 0);
+        document.querySelector("#" + e.id.split("n")[0]).value = e.value;
+        setSetting({ [e.id.split("n")[0]]: e.value });
     });
 });
 
-// 값 바뀌면 저장하는 코드
-document.querySelectorAll("input").forEach((ele) => {
-    if (ele.id == "op2s2") {
-        ele.addEventListener("click", function () {
-            chrome.storage.local.get(["op2s2"], (r) => {
-                let data = JSON.parse(r.op2s2 || "[]");
-                data.push(this.parentNode.querySelector('[type="text"]').value);
-                chrome.storage.local.set({ op2s2: JSON.stringify(data) });
-                restart("op2s2", JSON.stringify(data), "localFont");
-                location.reload();
-            });
-        });
-        return;
-    }
-    if (!["number", "buutton"].includes(ele.type)) {
-        let setting = ele.type == "checkbox" ? "checked" : "value";
-        ele.addEventListener("change", function () {
-            chrome.storage.local.set({ [ele.id]: ele[setting] });
-            restart(ele.id, ele[setting], ele.dataset.filename);
-        });
-    }
+document.querySelectorAll('input[type="checkbox"]').forEach((e) => {
+    e.addEventListener("click", () => {
+        setSetting({ [e.id]: e.checked });
+    });
 });
 
-// 값 가져와서 화면에 뿌리는 코드
-chrome.storage.local.get(["op1s1", "op2s1", "op3s1", "op1s2", "op2s2", "op1s3", "op1s4", "op1s5"], (r) => {
-    document.querySelector("#op1s1").checked = r.op1s1 || false;
-    document.querySelector("#op2s1").value = r.op2s1 || 1;
-    document.querySelector("#op2s1").dispatchEvent(new Event("input"));
-    document.querySelector("#op3s1").value = r.op3s1 || 100;
-    document.querySelector("#op3s1").dispatchEvent(new Event("input"));
-    document.querySelector("#op1s2").checked = r.op1s2 || false;
-    JSON.parse(r.op2s2 || "[]").forEach((i, l) => addFont(i, l, r.op2s2));
-    document.querySelector("#op1s3").checked = r.op1s3 || false;
-    document.querySelector("#op1s4").checked = r.op1s4 || false;
-    document.querySelector("#op1s5").checked = r.op1s5 || false;
+document.querySelector("#op2s0n").addEventListener("click", async () => {
+    const nowFontData = (await getSetting()).op2s2 || [];
+    nowFontData.push(document.querySelector("#op2s0").value);
+    setSetting({ op2s2: nowFontData });
+    location.reload();
 });
+(async () => {
+    const data = await getSetting();
+    Object.entries(data).forEach((i) => {
+        console.log(i);
+        switch (typeof i[1]) {
+            case "object":
+                if (i[0] == "op2s2") {
+                    i[1].forEach((v) => {
+                        const cn = document.querySelector("#op2tem").content.cloneNode(true);
+                        console.log(cn);
+                        cn.querySelector(".fontName").innerText = v;
+                        cn.querySelector(".fontName").style.fontFamily = v;
+                        cn.querySelector(".deleteBtn").addEventListener("click", removeFont);
+                        cn.querySelector(".deleteBtn").dataset.index = document.querySelectorAll(".fontName").length;
+                        document.querySelector(".op2").appendChild(cn);
+                    });
+                }
+                break;
+            case "boolean":
+                document.querySelector("#" + i[0]).checked = i[1];
+                break;
+
+            default:
+                document.querySelector("#" + i[0]).value = i[1];
+                document.querySelector("#" + i[0] + "n").value = i[1];
+                break;
+        }
+        console.log(document.querySelector("#" + i[0]));
+    });
+})();
+
+async function removeFont() {
+    let nowFont = (await getSetting())["op2s2"];
+    nowFont.splice(this.dataset.index, 1);
+    setSetting({ op2s2: nowFont });
+    location.reload();
+}
