@@ -24,6 +24,6 @@ const intervalEntry = setInterval(async () => {
     console.log("searching...");
     if (document.querySelector(".entry")) {
         clearInterval(intervalEntry);
-        ["op1"].forEach((i) => enableCode(i)); // 알빠노 그냥 플러그인 다 켜두기 모먼트
+        ["op1", "op2", "op3", "op4"].forEach((i) => enableCode(i)); // 알빠노 그냥 플러그인 다 켜두기 모먼트
     }
 }, 500);
